@@ -1,4 +1,4 @@
-package ubb.repository;
+package ubb.config;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

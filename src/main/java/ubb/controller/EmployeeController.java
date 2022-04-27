@@ -1,5 +1,6 @@
 package ubb.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ubb.repository.entity.EmployeeEntity;
 import ubb.service.EmployeeService;
@@ -37,5 +38,6 @@ public class EmployeeController {
     public List<EmployeeEntity> getAll(){
         return employeeService.getAllEmployee();
     }
+
 
 }
