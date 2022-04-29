@@ -4,25 +4,50 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ubb.config.PasswordConfig;
+import ubb.controller.DTOS.EmployeeDTO;
+import ubb.controller.DTOS.RoleDTO;
 import ubb.repository.EmployeeRepository;
+import ubb.repository.RoleRepository;
 import ubb.repository.entity.EmployeeEntity;
 import ubb.service.utility.MapToUserDetails;
+import ubb.utils.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService implements UserDetailsService {
     private final EmployeeRepository employeeRepository;
+    private final RoleRepository roleRepository;
+    private final RoleEntityToDTOConvertor roleEntityToDTOConvertor;
+    private final RoleDTOToEntityConvertor roleDTOToEntityConvertor;
+    private final EmployeeEntityToDTOConvertor employeeEntityToDTOConvertor;
+    private final EmployeeDTOToEntityConvertor employeeDTOToEntityConvertor;
+    private final PasswordConfig passwordConfig;
 
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, RoleRepository roleRepository, RoleEntityToDTOConvertor roleEntityToDTOConvertor, RoleDTOToEntityConvertor roleDTOToEntityConvertor, EmployeeEntityToDTOConvertor employeeEntityToDTOConvertor, EmployeeDTOToEntityConvertor employeeDTOToEntityConvertor, PasswordConfig passwordConfig) {
         this.employeeRepository = employeeRepository;
+        this.roleRepository = roleRepository;
+        this.roleEntityToDTOConvertor = roleEntityToDTOConvertor;
+        this.roleDTOToEntityConvertor = roleDTOToEntityConvertor;
+        this.employeeEntityToDTOConvertor = employeeEntityToDTOConvertor;
+        this.employeeDTOToEntityConvertor = employeeDTOToEntityConvertor;
+        this.passwordConfig = passwordConfig;
     }
 
-    public void saveEmployee(EmployeeEntity e){
-        employeeRepository.save(e);
+    public void saveEmployee(EmployeeDTO employeeDTO){
+        // TODO
+        // validation
+        findUserWithSameName(employeeDTO.getUsername());
+        String password= employeeDTO.getPassword();
+        employeeDTO.setPassword(passwordConfig.passwordEncoder().encode(password));
+        employeeRepository.save(employeeDTOToEntityConvertor.convert(employeeDTO));
     }
 
-    public List<EmployeeEntity> getAllEmployee(){
+    public List<EmployeeEntity> getAllEmployees(){
         return employeeRepository.getAll();
     }
 
@@ -45,5 +70,24 @@ public class EmployeeService implements UserDetailsService {
         return new MapToUserDetails(user);
     }
 
-
+    /**
+     * Gets a set of all RoleModel defined in application
+     * @return Set<RoleDTO>
+     */
+    public Set<RoleDTO> getAllRoles() {
+        return roleRepository.getAll()
+                .stream()
+                .map(roleEntity -> roleEntityToDTOConvertor.convert(roleEntity))
+                .collect(Collectors.toSet());
+    }
+    /**
+     * Checks if a user with same username exists.
+     * @param username - String
+     * @throws ApplicationException - if username already taken
+     */
+    private void findUserWithSameName(String username) throws ApplicationException {
+        Optional<EmployeeEntity> entity = employeeRepository.findByUsername(username);
+        if(entity.isPresent())
+            throw new ApplicationException("This username has been taken, please enter another username");
+    }
 }

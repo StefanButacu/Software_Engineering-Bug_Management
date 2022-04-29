@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #DBF9FC;
+        }
+        </style>
+          <style>
+        .cardDisplay {
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+
+</head>
+<body>
+<div id="options">
+    <h3 class="text-center text pt-5">Select View</h3>
+    <div class="container">
+    <div id="options-row" class="cardDisplay">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Admin View</h5>
+                <p class="card-text">You can manage user accounts and subscriptions.</p>
+                <a href="/admin/" class="btn btn-primary">Admin</a>
+            </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Learner View</h5>
+                <p class="card-text">Book and manage your subscriptions.</p>
+                <a href="/learner/" class="btn btn-primary">Learner</a>
+            </div>
+        </div>
+
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Logout</h5>
+                 <form
+                        th:action="@{/logout}" method="post">
+                        <input type="submit" class="btn btn-primary" value="Logout"/></form>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

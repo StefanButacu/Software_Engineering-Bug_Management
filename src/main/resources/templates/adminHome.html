@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Admin Home</title>
+    <style>
+        body {
+            background-color: #DBF9FC;
+        }
+    </style>
+</head>
+<body>
+<!--<div th:replace="~{fragments/adminNavbar :: adminNavigation}"></div>-->
+
+<div class="container my-2">
+    <h1>Users List</h1>
+    <a th:href = "@{/admin/save}" class ="btn btn-primary btn-sm mb-3">Add User</a>
+    <span style="color:red;" th:if="${error}"  th:text="${error}">Error</span>
+
+    <table border ="1" class = "table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="entity: ${entities}">
+            <td th:text="${entity.id}"/>
+            <td th:text="${entity.username}"/>
+            <td th:text="${entity.password}"/>
+            <td th:text="${entity.role.role}" />
+
+            <td> <a th:href="@{/admin/update/{id}(id=${entity.id})}" > <button class="btn btn-primary">Update</button> </a>
+                <a th:href="@{/admin/delete/{id}(id=${entity.id})}" > <button class="btn btn-danger"> Delete </button> </a></td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
