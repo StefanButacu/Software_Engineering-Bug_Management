@@ -6,6 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ubb.repository.entity.EmployeeEntity;
+import ubb.utils.ApplicationException;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -24,12 +25,23 @@ public class EmployeeRepository {
         getSession().save(entity);
     }
 
-    public void delete(EmployeeEntity entity){
+    public void delete(Long id){
+        EmployeeEntity entity = findById(id).orElseThrow( () -> new ApplicationException("Non existing employee with id" + id));
         getSession().delete(entity);
+
+
     }
+
 
     public void update(EmployeeEntity entity){
         getSession().update(entity);
+    }
+
+    public Optional<EmployeeEntity> findById(Long id){
+        Query query = getSession().createQuery("SELECT e FROM EmployeeEntity e WHERE id_employee=:id", EmployeeEntity.class);
+        query.setParameter("id", id);
+        return (Optional<EmployeeEntity>) query.getResultList().stream().findFirst();
+
     }
 
     public Optional<EmployeeEntity> findByUsername(String username){

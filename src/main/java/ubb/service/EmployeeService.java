@@ -1,5 +1,6 @@
 package ubb.service;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -89,5 +90,34 @@ public class EmployeeService implements UserDetailsService {
         Optional<EmployeeEntity> entity = employeeRepository.findByUsername(username);
         if(entity.isPresent())
             throw new ApplicationException("This username has been taken, please enter another username");
+    }
+
+    public void deleteEmployeeById(Long id) {
+//        employeeRepository.findById(id).orElseThrow(()->new ApplicationException("Not exist such user with this id="+id));
+//        String loggedUserUsername = getLoggedUserDetails()
+//                .orElseThrow(()-> new ApplicationException("Cannot find logged user"))
+//                .getUsername();
+//        Optional<EmployeeEntity> existingUserEntity = employeeRepository.findById(id);
+//        if(existingUserEntity.isPresent()){
+//            String existingUsername = existingUserEntity.get().getUsername();
+//            if(loggedUserUsername.equals(existingUsername))
+//                throw new ApplicationException("Can't delete logged user");
+//        }
+        employeeRepository.delete(id);
+    }
+
+    /**
+     * Gets an optional of a UserDetails which should contain Current logged user
+     * @return Optional.empty() - if it can't get logged user
+     *         Optional.of(loggedUser) - otherwise
+     */
+    public Optional<UserDetails> getLoggedUserDetails() {
+        Optional<UserDetails> loggedUser;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            loggedUser = Optional.of( (UserDetails) principal);
+        }
+        else loggedUser = Optional.empty();
+        return loggedUser;
     }
 }
