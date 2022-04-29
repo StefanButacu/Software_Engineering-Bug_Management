@@ -39,14 +39,9 @@ public class EmployeeEntity {
             nullable = false)
     private boolean isEnabled;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "users_roles",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
-//    private Set<RoleEntity> roles = new HashSet<>();
-//
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private RoleEntity role;
 
     public EmployeeEntity() {
     }
@@ -114,13 +109,13 @@ public class EmployeeEntity {
         isEnabled = enabled;
     }
 
-//    public Set<RoleEntity> getRoles () {
-//        return roles;
-//    }
-//
-//    public void setRoles (Set < RoleEntity > roles) {
-//        this.roles = roles;
-//    }
+    public RoleEntity getRole () {
+        return role;
+    }
+
+    public void setRole ( RoleEntity roles) {
+        this.role = roles;
+    }
 
 }
 

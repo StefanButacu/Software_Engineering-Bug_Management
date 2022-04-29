@@ -19,7 +19,12 @@ public class ErrorHandlerController implements ErrorController {
     @GetMapping("/ceva")
     public String smth(){
         return "<h1>text</h1>";
-
     }
+
+//    @GetMapping("/login")
+//    public String f(){
+//        return "loginPage";
+//
+//    }
 }
 

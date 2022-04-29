@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ubb.repository.EmployeeRepository;
 import ubb.repository.entity.EmployeeEntity;
+import ubb.service.utility.MapToUserDetails;
 
 import java.util.List;
 
@@ -39,6 +40,10 @@ public class EmployeeService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        EmployeeEntity user = employeeRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Could not find user"));
+        return new MapToUserDetails(user);
     }
+
+
 }
