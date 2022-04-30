@@ -93,17 +93,32 @@ public class EmployeeService implements UserDetailsService {
     }
 
     public void deleteEmployeeById(Long id) {
-//        employeeRepository.findById(id).orElseThrow(()->new ApplicationException("Not exist such user with this id="+id));
-//        String loggedUserUsername = getLoggedUserDetails()
-//                .orElseThrow(()-> new ApplicationException("Cannot find logged user"))
-//                .getUsername();
-//        Optional<EmployeeEntity> existingUserEntity = employeeRepository.findById(id);
-//        if(existingUserEntity.isPresent()){
-//            String existingUsername = existingUserEntity.get().getUsername();
-//            if(loggedUserUsername.equals(existingUsername))
-//                throw new ApplicationException("Can't delete logged user");
-//        }
+        employeeRepository.findById(id).orElseThrow(()->new ApplicationException("Not exist such user with this id="+id));
+        String loggedUserUsername = getLoggedUserDetails()
+                .orElseThrow(()-> new ApplicationException("Cannot find logged user"))
+                .getUsername();
+        Optional<EmployeeEntity> existingUserEntity = employeeRepository.findById(id);
+        if(existingUserEntity.isPresent()){
+            String existingUsername = existingUserEntity.get().getUsername();
+            if(loggedUserUsername.equals(existingUsername))
+                throw new ApplicationException("Can't delete logged user");
+        }
         employeeRepository.delete(id);
+    }
+
+    /**
+     * Method used to look in Repository for the user with same username
+     * @param employeeDTO - UserModel
+     * @throws UsernameNotFoundException - if user entity with same id as user model does not exist
+     */
+    public void updateUser(EmployeeDTO employeeDTO) throws ApplicationException {
+//        userValidator.validation(employeeDTO);
+        //   UserDTO existingUser = findUserById(userDTO.getId());
+        //  String existingUserPassword = existingUser.getPassword();
+        if(employeeDTO.getPassword().length() != 60)
+            employeeDTO.setPassword(passwordConfig.passwordEncoder().encode(employeeDTO.getPassword()));
+
+        employeeRepository.update(employeeDTOToEntityConvertor.convert(employeeDTO));
     }
 
     /**
@@ -120,4 +135,10 @@ public class EmployeeService implements UserDetailsService {
         else loggedUser = Optional.empty();
         return loggedUser;
     }
+
+    public EmployeeDTO findEmployeeById(Long id){
+        EmployeeEntity entity =  employeeRepository.findById(id).orElseThrow(()->new ApplicationException("Not exist such user with this id="+id));
+        return employeeEntityToDTOConvertor.convert(entity);
+    }
+
 }

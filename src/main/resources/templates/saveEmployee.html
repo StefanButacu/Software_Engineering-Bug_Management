@@ -2,25 +2,23 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
-    <title>Users Management System</title>
+    <title>Employee Management System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <style>
-        body {
-            background-color: #DBF9FC;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/home.css}" />
+
 </head>
 
 <body>
     <div class = "container">
-        <h1>User Management System</h1>
+        <h1>Employee Management System</h1>
         <hr>
-        <h2>Save User</h2>
-        <form action="#" th:action="@{/admin/save}" th:object="${user}" method="POST">
+        <h2>Save Employee</h2>
+        <form action="#" th:action="@{/admin/save}" th:object="${employee}" method="POST">
         <span style="color:red" th:if="${error}" th:text="${error}">Error</span>
 
             <input type ="text" th:field = "*{username}" placeholder="Username" class="form-control mb-4 col-4">
@@ -39,9 +37,9 @@
                 <br>
             </div>
             <br>
-            <button type="submit" class="btn btn-info col-2">Save User</button>
+            <button type="submit" class="btn btn-info col-2">Save Employee</button>
         </form>
         <hr>
-        <a th:href = "@{/admin/}">Back to User List</a>
+        <a th:href = "@{/admin/}">Back to Employee List</a>
 </body>
 </html>
