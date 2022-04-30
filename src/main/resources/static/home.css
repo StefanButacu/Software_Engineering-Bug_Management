@@ -14,3 +14,21 @@ label { font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif; f
     background-color: black;
     color: white;
 }
+.table-border{
+    border: 1px solid black;
+}
+.btn-red{
+    background-color: black;
+    color: red;
+}
+.btn-update{
+    background-color: black;
+    color: green;
+}
+.btn-add{
+    background-color: black;
+    color:antiquewhite;
+}
+.btn-add:hover{
+    color: white;
+}

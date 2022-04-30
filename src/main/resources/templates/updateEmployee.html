@@ -16,7 +16,7 @@
     <h1>Employee Management System</h1>
     <hr>
     <h2>Update User</h2>
-    <span style="color:red;" th:if="${error}"  th:text="${error}">Error</span>
+    <span style="color:black;" th:if="${error}"  th:text="${error}">Error</span>
     <form action="#" th:action="@{/admin/update}" th:object="${employee}" method="POST">
         <input type ="hidden" th:field = "*{id}" placeholder="ID" class="form-control mb-4 col-4">
         <br>

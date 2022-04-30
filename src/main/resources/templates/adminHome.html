@@ -17,10 +17,11 @@
 
 <div class="container my-2">
     <h1>Employee List</h1>
-    <a th:href = "@{/admin/save}" class ="btn btn-primary btn-sm mb-3">Add Employee</a>
-    <span style="color:red;" th:if="${error}"  th:text="${error}">Error</span>
+    <a th:href = "@{/admin/save}" class ="btn btn-add">Add Employee</a>
+    <br><br>
+    <span style="color:black;" th:if="${error}"  th:text="${error}">Error</span>
 
-    <table border ="1" class = "table table-striped table-responsive-md">
+    <table class = "table table-hover table-dark table-border">
         <thead>
         <tr>
             <th>ID</th>
@@ -38,8 +39,14 @@
             <td th:text="${entity.password}"/>
             <td th:text="${entity.role.role}" />
 
-            <td> <a th:href="@{/admin/update/{id}(id=${entity.id})}" > <button class="btn btn-primary">Update</button> </a>
-                <a th:href="@{/admin/delete/{id}(id=${entity.id})}" > <button class="btn btn-danger">Delete</button> </a></td>
+            <td>
+                <a th:href="@{/admin/update/{id}(id=${entity.id})}" >
+                    <button type="button" class="btn btn-update">Update</button>
+                </a>
+                <a th:href="@{/admin/delete/{id}(id=${entity.id})}" >
+                    <button type="button" class="btn btn-red" >Delete</button>
+                </a>
+            </td>
 
         </tr>
         </tbody>
