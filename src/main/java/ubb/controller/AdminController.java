@@ -6,13 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ubb.controller.DTOS.EmployeeDTO;
 import ubb.controller.DTOS.RoleDTO;
-import ubb.repository.entity.EmployeeEntity;
 import ubb.service.EmployeeService;
 import ubb.utils.ApplicationException;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -32,15 +30,15 @@ public class AdminController {
     }
 
     @GetMapping(path="/save")
-    public String createUserGet(Model model){
+    public String showSaveEmployeeForm(Model model){
         model.addAttribute("employee", new EmployeeDTO());
-        Set<RoleDTO> roleDTOSet = employeeService.getAllRoles();
-        model.addAttribute("allRoles", roleDTOSet);
+        List<RoleDTO> roleDTO = employeeService.getAllRoles();
+        model.addAttribute("allRoles", roleDTO);
         return "saveEmployee";
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute("user") EmployeeDTO employeeDTO, Model model){
+    public String saveEmployee(@ModelAttribute("employee") EmployeeDTO employeeDTO, Model model){
         try {
             employeeService.saveEmployee(employeeDTO);
         }catch (ApplicationException ex){
@@ -66,27 +64,27 @@ public class AdminController {
 
 
     @GetMapping("/update/{id}")
-    public String showFormForUpdate(@PathVariable (value = "id") long id, Model model){
+    public String showUpdateEmployeeForm(@PathVariable (value = "id") long id, Model model){
         EmployeeDTO employee = employeeService.findEmployeeById(id);
         model.addAttribute("employee", employee);
-        List<RoleDTO> roleDTOSet = employeeService.getAllRoles().stream()
+        List<RoleDTO> roleDTO = employeeService.getAllRoles().stream()
                                             .sorted(Comparator.comparing(RoleDTO::getRole))
                                             .collect(Collectors.toList());
-            model.addAttribute("allRoles", roleDTOSet);
+            model.addAttribute("allRoles", roleDTO);
         return "updateEmployee";
     }
 
     @PostMapping(path="/update")
-    public String updateUser(@ModelAttribute("employee") EmployeeDTO employeeDTO, Model model){
+    public String updateEmployee(@ModelAttribute("employee") EmployeeDTO employeeDTO, Model model){
         try {
-            employeeService.updateUser(employeeDTO);
+            employeeService.updateEmployee(employeeDTO);
         }catch (ApplicationException ex){
             model.addAttribute("error", ex.getMessage());
             List<RoleDTO> roleDTOSet = employeeService.getAllRoles().stream()
                          .sorted(Comparator.comparing(RoleDTO::getRole))
                          .collect(Collectors.toList());
             model.addAttribute("allRoles", roleDTOSet);
-            return "updateUser";
+            return "updateEmployee";
         }
         return "redirect:/admin/";
     }

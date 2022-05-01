@@ -11,6 +11,7 @@ import ubb.controller.DTOS.RoleDTO;
 import ubb.repository.EmployeeRepository;
 import ubb.repository.RoleRepository;
 import ubb.repository.entity.EmployeeEntity;
+import ubb.service.utility.EmployeeValidator;
 import ubb.service.utility.MapToUserDetails;
 import ubb.utils.*;
 
@@ -28,8 +29,9 @@ public class EmployeeService implements UserDetailsService {
     private final EmployeeEntityToDTOConvertor employeeEntityToDTOConvertor;
     private final EmployeeDTOToEntityConvertor employeeDTOToEntityConvertor;
     private final PasswordConfig passwordConfig;
+    private final EmployeeValidator employeeValidator;
 
-    public EmployeeService(EmployeeRepository employeeRepository, RoleRepository roleRepository, RoleEntityToDTOConvertor roleEntityToDTOConvertor, RoleDTOToEntityConvertor roleDTOToEntityConvertor, EmployeeEntityToDTOConvertor employeeEntityToDTOConvertor, EmployeeDTOToEntityConvertor employeeDTOToEntityConvertor, PasswordConfig passwordConfig) {
+    public EmployeeService(EmployeeRepository employeeRepository, RoleRepository roleRepository, RoleEntityToDTOConvertor roleEntityToDTOConvertor, RoleDTOToEntityConvertor roleDTOToEntityConvertor, EmployeeEntityToDTOConvertor employeeEntityToDTOConvertor, EmployeeDTOToEntityConvertor employeeDTOToEntityConvertor, PasswordConfig passwordConfig, EmployeeValidator employeeValidator) {
         this.employeeRepository = employeeRepository;
         this.roleRepository = roleRepository;
         this.roleEntityToDTOConvertor = roleEntityToDTOConvertor;
@@ -37,19 +39,21 @@ public class EmployeeService implements UserDetailsService {
         this.employeeEntityToDTOConvertor = employeeEntityToDTOConvertor;
         this.employeeDTOToEntityConvertor = employeeDTOToEntityConvertor;
         this.passwordConfig = passwordConfig;
+        this.employeeValidator = employeeValidator;
     }
 
     public void saveEmployee(EmployeeDTO employeeDTO){
-        // TODO
-        // validation
+        employeeValidator.validation(employeeDTO);
         findUserWithSameName(employeeDTO.getUsername());
         String password= employeeDTO.getPassword();
         employeeDTO.setPassword(passwordConfig.passwordEncoder().encode(password));
         employeeRepository.save(employeeDTOToEntityConvertor.convert(employeeDTO));
     }
 
-    public List<EmployeeEntity> getAllEmployees(){
-        return employeeRepository.getAll();
+    public List<EmployeeDTO> getAllEmployees(){
+        return employeeRepository.getAll().stream()
+                .map(entity -> employeeEntityToDTOConvertor.convert(entity))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -75,11 +79,11 @@ public class EmployeeService implements UserDetailsService {
      * Gets a set of all RoleModel defined in application
      * @return Set<RoleDTO>
      */
-    public Set<RoleDTO> getAllRoles() {
+    public List<RoleDTO> getAllRoles() {
         return roleRepository.getAll()
                 .stream()
                 .map(roleEntity -> roleEntityToDTOConvertor.convert(roleEntity))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
     /**
      * Checks if a user with same username exists.
@@ -106,18 +110,11 @@ public class EmployeeService implements UserDetailsService {
         employeeRepository.delete(id);
     }
 
-    /**
-     * Method used to look in Repository for the user with same username
-     * @param employeeDTO - UserModel
-     * @throws UsernameNotFoundException - if user entity with same id as user model does not exist
-     */
-    public void updateUser(EmployeeDTO employeeDTO) throws ApplicationException {
-//        userValidator.validation(employeeDTO);
-        //   UserDTO existingUser = findUserById(userDTO.getId());
-        //  String existingUserPassword = existingUser.getPassword();
+
+    public void updateEmployee(EmployeeDTO employeeDTO) throws ApplicationException {
+        employeeValidator.validation(employeeDTO);
         if(employeeDTO.getPassword().length() != 60)
             employeeDTO.setPassword(passwordConfig.passwordEncoder().encode(employeeDTO.getPassword()));
-
         employeeRepository.update(employeeDTOToEntityConvertor.convert(employeeDTO));
     }
 

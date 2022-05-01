@@ -29,20 +29,34 @@
     <div class="container">
     <div id="options-row" class="cardDisplay">
         <div class="card" style="width: 18rem;">
-            <div class="card-body">
+            <div class="card-body" th:if="${authority == 'ROLE_ADMIN'}">
                 <h5 class="card-title">Admin View</h5>
-                <p class="card-text">You can manage user accounts and subscriptions.</p>
+                <p class="card-text">You can manage employee accounts</p>
                 <a href="/admin/" class="btn btn-primary">Admin</a>
             </div>
         </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body" th:if="${authority == 'ROLE_TESTER'}">
+                <h5 class="card-title">Tester View</h5>
+                <p class="card-text">You can add/update new bugs</p>
+                <a href="/admin/" class="btn btn-primary">Tester</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body" th:if="${authority == 'ROLE_MANAGER'}">
+                <h5 class="card-title">Manager View</h5>
+                <p class="card-text">You can assign bugs to programmers</p>
+                <a href="/admin/" class="btn btn-primary">Manager</a>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body" th:if="${authority == 'ROLE_PROGRAMMER'}">
+                <h5 class="card-title">Programmer View</h5>
+                <p class="card-text">You update bugs</p>
+                <a href="/admin/" class="btn btn-primary">Programmer</a>
+            </div>
+        </div>
 
-<!--        <div class="card" style="width: 18rem;">-->
-<!--            <div class="card-body">-->
-<!--                <h5 class="card-title">Learner View</h5>-->
-<!--                <p class="card-text">Book and manage your subscriptions.</p>-->
-<!--                <a href="/learner/" class="btn btn-primary">Learner</a>-->
-<!--            </div>-->
-<!--        </div>-->
 
         <div class="card" style="width: 18rem;">
             <div class="card-body">

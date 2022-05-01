@@ -28,7 +28,7 @@ public class StringToRoleConverter implements Converter<String, RoleDTO> {
      */
     @Override
     public RoleDTO convert(String roleName) {
-        Optional<RoleEntity> roleEntityOptional = roleEntityRepository.findRoleEntityByRole(roleName);
+        Optional<RoleEntity> roleEntityOptional = roleEntityRepository.findRoleEntityByName(roleName);
         return roleEntityToDTOConvertor.convert(roleEntityOptional
                 .orElseThrow(
                         ()->new ApplicationException("Not exist such role with this name="+roleName)));

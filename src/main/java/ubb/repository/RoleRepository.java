@@ -30,7 +30,7 @@ public class RoleRepository {
 
     }
 
-    public Optional<RoleEntity> findRoleEntityByRole(String roleName) {
+    public Optional<RoleEntity> findRoleEntityByName(String roleName) {
         Query query = getSession().createQuery("SELECT r FROM RoleEntity r WHERE role=:role", RoleEntity.class);
         query.setParameter("role", roleName);
         return (Optional<RoleEntity>) query.getResultList().stream().findFirst();

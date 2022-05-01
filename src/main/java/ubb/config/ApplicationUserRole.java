@@ -3,10 +3,6 @@ package ubb.config;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 public enum ApplicationUserRole {
     ADMIN(new SimpleGrantedAuthority("ROLE_ADMIN" )),
     PROGRAMMER(new SimpleGrantedAuthority("ROLE_PROGRAMMER")),
