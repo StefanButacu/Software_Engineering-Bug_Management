@@ -28,8 +28,6 @@ public class EmployeeRepository {
     public void delete(Long id){
         EmployeeEntity entity = findById(id).orElseThrow( () -> new ApplicationException("Non existing employee with id" + id));
         getSession().delete(entity);
-
-
     }
 
 

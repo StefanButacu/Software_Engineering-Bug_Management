@@ -19,6 +19,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            background-color: transparent;
         }
     </style>
 
@@ -28,43 +29,32 @@
     <h3 class="text-center text pt-5">Select View</h3>
     <div class="container">
     <div id="options-row" class="cardDisplay">
-        <div class="card" style="width: 18rem;">
-            <div class="card-body" th:if="${authority == 'ROLE_ADMIN'}">
-                <h5 class="card-title">Admin View</h5>
+            <div class="card text-white bg-secondary mb-3" th:if="${authority == 'ROLE_ADMIN'}">
+                <h5 class="card-header">Admin View</h5>
                 <p class="card-text">You can manage employee accounts</p>
-                <a href="/admin/" class="btn btn-primary">Admin</a>
+                <a href="/admin/" class="btn btn-login">Admin</a>
             </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body" th:if="${authority == 'ROLE_TESTER'}">
+            <div class="card text-white bg-secondary mb-3" th:if="${authority == 'ROLE_TESTER'}">
                 <h5 class="card-title">Tester View</h5>
                 <p class="card-text">You can add/update new bugs</p>
-                <a href="/admin/" class="btn btn-primary">Tester</a>
+                <a href="/admin/" class="btn btn-login">Tester</a>
             </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body" th:if="${authority == 'ROLE_MANAGER'}">
+
+            <div class="card text-white bg-secondary mb-3" th:if="${authority == 'ROLE_MANAGER'}">
                 <h5 class="card-title">Manager View</h5>
                 <p class="card-text">You can assign bugs to programmers</p>
-                <a href="/admin/" class="btn btn-primary">Manager</a>
+                <a href="/admin/" class="btn btn-login">Manager</a>
             </div>
-        </div>
-        <div class="card" style="width: 18rem;">
-            <div class="card-body" th:if="${authority == 'ROLE_PROGRAMMER'}">
+            <div class="card text-white bg-secondary mb-3" th:if="${authority == 'ROLE_PROGRAMMER'}">
                 <h5 class="card-title">Programmer View</h5>
                 <p class="card-text">You update bugs</p>
-                <a href="/admin/" class="btn btn-primary">Programmer</a>
+                <a href="/admin/" class="btn btn-login">Programmer</a>
             </div>
-        </div>
-
-
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">Logout</h5>
-                 <form
-                        th:action="@{/logout}" method="post">
-                        <input type="submit" class="btn btn-primary" value="Logout"/></form>
-            </div>
+            <div class="card text-white bg-secondary mb-3">
+            <form
+                    th:action="@{/logout}" method="post">
+                    <input type="submit" class="btn btn-login" value="Logout"/>
+            </form>
         </div>
     </div>
     </div>
