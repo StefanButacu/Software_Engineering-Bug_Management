@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Bug Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/home.css}" />
+
+</head>
+
+<body>
+    <div class = "container">
+        <h1>Bug Management System</h1>
+        <hr>
+        <h2>Bug Employee</h2>
+        <form action="#" th:action="@{/tester/save}" th:object="${bug}" method="POST">
+        <span style="color:black" th:if="${error}" th:text="${error}">Error</span>
+            <label>Title:</label>
+            <input type ="text" th:field = "*{title}" placeholder="Title" class="form-control mb-4 col-4">
+            <br>
+            <label>Description</label>
+            <input type ="text" th:field = "*{description}" placeholder="Description" class="form-control mb-4 col-4">
+            <br>
+
+            <br>
+            <button type="submit" class="btn btn-add">Save Bug</button>
+        </form>
+        <hr>
+        <a th:href = "@{/tester/}" style="color:black">Back to Bug List</a>
+</body>
+</html>
