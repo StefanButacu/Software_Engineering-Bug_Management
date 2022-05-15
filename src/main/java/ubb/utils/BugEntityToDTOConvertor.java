@@ -20,6 +20,8 @@ public class BugEntityToDTOConvertor  implements Converter<BugEntity, BugDTO> {
         bug.setTitle(source.getTitle());
         bug.setDescription(source.getDescription());
         bug.setStatus(source.getStatus());
+        bug.setApparitionDate(source.getApparitionDate());
+        bug.setApprovalDate(source.getApprovalDate());
         return bug;
     }
 }

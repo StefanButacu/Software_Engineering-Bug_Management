@@ -38,12 +38,19 @@ public class BugService {
     }
 
     public void deleteBugById(Long id){
-        bugRepository.findById(id).orElseThrow(() -> new ApplicationException("Could not find the bug with id" + id));
         bugRepository.delete(id);
     }
 
     public void updateBug(BugDTO bugDTO){
         bugRepository.findById(bugDTO.getId()).orElseThrow(() -> new ApplicationException("Could not find the bug with id" + bugDTO.getId()));
+        bugValidator.validation(bugDTO);
         bugRepository.update(bugDTOToEntityConvertor.convert(bugDTO));
+    }
+
+    public BugDTO findBugById(Long id){
+        return bugEntityToDTOConvertor
+                .convert(bugRepository.findById(id)
+                        .orElseThrow(() -> new ApplicationException("Could not find bug with id" + id)));
+
     }
 }

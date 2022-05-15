@@ -1,6 +1,9 @@
 package ubb.repository.entity;
 
+import org.apache.tomcat.jni.Local;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="bugs")
@@ -21,6 +24,16 @@ public class BugEntity {
             columnDefinition = "VARCHAR(30)")
     private String description;
 
+    @Column(name = "apparition_date", columnDefinition = "DATE")
+    private LocalDate apparitionDate;
+
+    @Column(name = "approval_date", columnDefinition = "DATE")
+    private LocalDate approvalDate;
+
+    @Enumerated(EnumType.STRING)
+    private BugStatus status;
+
+
     @Override
     public String toString() {
         return "BugEntity{" +
@@ -34,8 +47,22 @@ public class BugEntity {
     public BugEntity() {
     }
 
-    @Enumerated(EnumType.STRING)
-    private BugStatus status;
+
+    public LocalDate getApparitionDate() {
+        return apparitionDate;
+    }
+
+    public void setApparitionDate(LocalDate apparitionDate) {
+        this.apparitionDate = apparitionDate;
+    }
+
+    public LocalDate getApprovalDate() {
+        return approvalDate;
+    }
+
+    public void setApprovalDate(LocalDate approvalDate) {
+        this.approvalDate = approvalDate;
+    }
 
     public BugEntity(Long id, String title, String description, BugStatus status) {
         this.id = id;

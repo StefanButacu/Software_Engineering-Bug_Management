@@ -2,6 +2,12 @@ package ubb.controller.DTOS;
 
 
 public class EmployeeDTO {
+
+        private Long id;
+        private String username;
+        private String password;
+        private RoleDTO role;
+
         public Long getId() {
                 return id;
         }
@@ -37,8 +43,4 @@ public class EmployeeDTO {
         public EmployeeDTO() {
         }
 
-        private Long id;
-        private String username;
-        private String password;
-        private RoleDTO role;
 }

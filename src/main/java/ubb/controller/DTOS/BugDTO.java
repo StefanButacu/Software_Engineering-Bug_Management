@@ -2,11 +2,31 @@ package ubb.controller.DTOS;
 
 import ubb.repository.entity.BugStatus;
 
+import java.time.LocalDate;
+
 public class BugDTO {
     private Long id;
     private String title;
     private String description;
     private BugStatus status;
+    private LocalDate apparitionDate;
+    private LocalDate approvalDate;
+
+    public LocalDate getApparitionDate() {
+        return apparitionDate;
+    }
+
+    public void setApparitionDate(LocalDate apparitionDate) {
+        this.apparitionDate = apparitionDate;
+    }
+
+    public LocalDate getApprovalDate() {
+        return approvalDate;
+    }
+
+    public void setApprovalDate(LocalDate approvalDate) {
+        this.approvalDate = approvalDate;
+    }
 
     public BugDTO() {
     }

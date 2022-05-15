@@ -28,6 +28,8 @@
             <th>Title</th>
             <th>Description</th>
             <th>Status</th>
+            <th>Apparition Date</th>
+            <th>Actions</th>
         </tr>
         </thead>
 
@@ -37,7 +39,7 @@
             <td th:text="${bug.title}"/>
             <td th:text="${bug.description}"/>
             <td th:text="${bug.status}" />
-
+            <td th:text="${bug.apparitionDate}"></td>
             <td>
                 <a th:href="@{/tester/update/{id}(id=${bug.id})}" >
                     <button type="button" class="btn btn-update">Update</button>

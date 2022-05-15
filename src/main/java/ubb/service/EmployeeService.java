@@ -16,6 +16,7 @@ import ubb.service.utility.MapToUserDetails;
 import ubb.utils.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -131,6 +132,13 @@ public class EmployeeService implements UserDetailsService {
         }
         else loggedUser = Optional.empty();
         return loggedUser;
+    }
+
+    public List<EmployeeDTO> getAllEmployeeProgrammers(){
+        return getAllEmployees()
+                .stream()
+                .filter(dto -> dto.getRole().getRole().toLowerCase(Locale.ROOT).equals("programmer"))
+                .collect(Collectors.toList());
     }
 
     public EmployeeDTO findEmployeeById(Long id){
