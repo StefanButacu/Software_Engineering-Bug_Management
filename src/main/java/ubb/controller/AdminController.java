@@ -64,7 +64,7 @@ public class AdminController {
 
 
     @GetMapping("/update/{id}")
-    public String showUpdateEmployeeForm(@PathVariable (value = "id") long id, Model model){
+    public String showUpdateEmployeeForm(@PathVariable (value = "id") Long id, Model model){
         EmployeeDTO employee = employeeService.findEmployeeById(id);
         model.addAttribute("employee", employee);
         List<RoleDTO> roleDTO = employeeService.getAllRoles().stream()

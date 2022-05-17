@@ -64,7 +64,7 @@ public class TesterController {
     }
 
     @GetMapping("/update/{id}")
-    public String showUpdateBugForm(@PathVariable (value = "id") long id, Model model){
+    public String showUpdateBugForm(@PathVariable (value = "id") Long id, Model model){
         BugDTO bug = bugService.findBugById(id);
         model.addAttribute("bug", bug);
         return "updateBug";
