@@ -37,7 +37,10 @@
         <tr th:each="bug: ${bugs}">
             <td th:text="${bug.id}"/>
             <td th:text="${bug.title}"/>
-            <td th:text="${bug.description}"/>
+            <td>
+                <textarea th:rows="15" th:cols="50" th:text="${bug.description}" readonly>
+                </textarea>
+            </td>
             <td th:text="${bug.status}" />
             <td th:text="${bug.apparitionDate}"></td>
             <td>

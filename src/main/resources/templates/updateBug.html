@@ -21,10 +21,12 @@
         <input type ="hidden" th:field = "*{id}" placeholder="ID" class="form-control mb-4 col-4">
         <input type = "hidden" th:field = "*{apparitionDate}">
         <br>
+        <label>Title:</label><br>
         <input type ="text" th:field = "*{title}" placeholder="Title" class="form-control mb-4 col-4">
         <br>
-        <input type ="text" th:field = "*{description}" placeholder="Description" class="form-control mb-4 col-4">
-
+        <label>Description:</label> <br>
+        <textarea  rows="15" cols="50" th:field = "*{description}">
+        </textarea>
         <br>
         <button type="submit" class="btn btn-update">Update</button>
     </form>

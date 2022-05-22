@@ -21,7 +21,7 @@ public class BugEntity {
 
     @Column(name = "description",
             nullable = false,
-            columnDefinition = "VARCHAR(30)")
+            columnDefinition = "VARCHAR(250)")
     private String description;
 
     @Column(name = "apparition_date", columnDefinition = "DATE")
