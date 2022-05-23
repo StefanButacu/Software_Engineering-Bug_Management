@@ -2,7 +2,9 @@ package ubb.repository.entity;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -42,6 +44,13 @@ public class EmployeeEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private RoleEntity role;
+
+
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<AssignmentEntity> assignmentEntityList = new ArrayList<>();
+
+
 
     public EmployeeEntity() {
     }

@@ -146,4 +146,9 @@ public class EmployeeService implements UserDetailsService {
         return employeeEntityToDTOConvertor.convert(entity);
     }
 
+    public EmployeeDTO findEmployeeByUsername(String username) {
+        EmployeeEntity entity =  employeeRepository.findByUsername(username).orElseThrow(()->new ApplicationException("Not exist such user with this username="+username));
+        return employeeEntityToDTOConvertor.convert(entity);
+
+    }
 }

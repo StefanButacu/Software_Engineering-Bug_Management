@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Tester Home</title>
+    <link rel="stylesheet" th:href="@{/home.css}" />
+
+</head>
+<body>
+
+<div style="display: flex; flex-direction: row">
+    <div>
+    <h1>Bug List</h1>
+    <div style="color:black;" th:if="${error}"  th:text="${error}">Error</div>
+
+    <table class = "table table-hover table-dark table-border">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Apparition Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="bug: ${bugs}">
+            <td th:text="${bug.id}"/>
+            <td th:text="${bug.title}"/>
+            <td>
+                <textarea th:rows="8" th:cols="40" th:text="${bug.description}" readonly>
+                </textarea>
+            </td>
+            <td th:text="${bug.status}" />
+            <td th:text="${bug.apparitionDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+    <div>
+    <h1>Programmer List</h1>
+        <table class = "table table-hover table-dark table-border">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Role</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="programmer: ${programmers}">
+                <td th:text="${programmer.id}"/>
+                <td th:text="${programmer.username}"/>
+                <td th:text="${programmer.role.role}" />
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <form  th:action = "@{/manager/save}" th:method="post" th:object="${assignment}">
+            <select class="form-control" id="bugList" th:field="*{idBug}">
+                <option th:value="-1" selected>Select Bug</option>
+                <option th:each="bug : ${bugs}" th:value="${bug.id}" th:text="${bug.id}"></option>
+            </select>
+            <button type="submit" class="btn btn-add">Assign Bug</button>
+            <select class="form-control" id="programmerList" th:field="*{idProgrammer}">
+                <option selected th:value="-1">Select Programmer</option>
+                <option th:each="programmer : ${programmers}" th:value="${programmer.id}" th:text="${programmer.id}"></option>
+            </select>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

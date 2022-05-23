@@ -4,6 +4,10 @@ import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="bugs")
@@ -33,6 +37,8 @@ public class BugEntity {
     @Enumerated(EnumType.STRING)
     private BugStatus status;
 
+    @OneToMany(mappedBy = "bug", cascade = CascadeType.ALL)
+    private List<AssignmentEntity> assignmentEntityList = new ArrayList<>();
 
     @Override
     public String toString() {
