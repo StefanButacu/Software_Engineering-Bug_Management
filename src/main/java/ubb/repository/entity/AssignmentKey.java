@@ -24,4 +24,19 @@ public class AssignmentKey implements Serializable {
             columnDefinition = "BIGINT")
     private Long idBug;
 
+    public Long getIdEmployee() {
+        return idEmployee;
+    }
+
+    public void setIdEmployee(Long idEmployee) {
+        this.idEmployee = idEmployee;
+    }
+
+    public Long getIdBug() {
+        return idBug;
+    }
+
+    public void setIdBug(Long idBug) {
+        this.idBug = idBug;
+    }
 }

@@ -53,7 +53,7 @@ public class ManagerController {
            EmployeeDTO employeeDTO = employeeService.findEmployeeById(assignment.getIdProgrammer());
            AssignmentDTO assignmentDTO = new AssignmentDTO(bugDTO, employeeDTO, LocalDate.now());
            assignmentService.save(assignmentDTO);
-       }catch (ApplicationException ex){
+       }catch (Exception ex){
            model.addAttribute("error", ex.getMessage());
            return "managerHome";
        }
