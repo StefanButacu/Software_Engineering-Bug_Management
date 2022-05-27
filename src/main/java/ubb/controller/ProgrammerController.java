@@ -3,15 +3,14 @@ package ubb.controller;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ubb.controller.DTOS.BugDTO;
 import ubb.controller.DTOS.EmployeeDTO;
 import ubb.repository.entity.BugStatus;
 import ubb.service.AssignmentService;
 import ubb.service.BugService;
 import ubb.service.EmployeeService;
+import ubb.utils.ApplicationException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,12 +42,29 @@ public class ProgrammerController {
         return "programmerHome";
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/mark-as-solved/{id}")
     public String markBugAsResolved(Model model, @PathVariable("id") Long idBug){
         BugDTO dto = bugService.findBugById(idBug);
         dto.setStatus(BugStatus.SOLVED);
         bugService.updateBug(dto);
         return "redirect:/programmer/";
+    }
 
+    @GetMapping("/update/{id}")
+    public String showUpdateBugForm(@PathVariable (value = "id") Long id, Model model){
+        BugDTO bug = bugService.findBugById(id);
+        model.addAttribute("bug", bug);
+        return "updateBugProgrammer";
+    }
+
+    @PostMapping(path="/update")
+    public String updateBug(@ModelAttribute("bug") BugDTO bugDTO, Model model){
+        try {
+            bugService.updateBug(bugDTO);
+        }catch (ApplicationException ex){
+            model.addAttribute("error", ex.getMessage());
+            return "updateBugProgrammer";
+        }
+        return "redirect:/programmer/";
     }
 }

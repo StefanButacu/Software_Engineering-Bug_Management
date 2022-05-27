@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Bugs Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/home.css}" />
+
+</head>
+<body>
+<div class = "container">
+    <hr>
+    <h2>Update Bug</h2>
+    <span style="color:black;" th:if="${error}"  th:text="${error}">Error</span>
+    <form action="#" th:action="@{/programmer/update}" th:object="${bug}" method="POST">
+        <input type ="hidden" th:field = "*{id}" placeholder="ID" class="form-control mb-4 col-4">
+        <input type = "hidden" th:field = "*{apparitionDate}">
+        <br>
+        <label>Title:</label><br>
+        <input type ="text" th:field = "*{title}" placeholder="Title" class="form-control mb-4 col-4">
+        <input type="text" th:field = "*{status}" hidden>
+        <br>
+        <label>Description:</label> <br>
+        <textarea  rows="15" cols="50" th:field = "*{description}">
+        </textarea>
+        <br>
+        <button type="submit" class="btn btn-update">Update</button>
+    </form>
+    <hr>
+    <a th:href = "@{/programmer/}" style="color: black">Back to Bug List</a>
+</div>
+</body>
+</html>

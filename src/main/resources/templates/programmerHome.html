@@ -45,8 +45,11 @@
             <td th:text="${bug.status}" />
             <td th:text="${bug.apparitionDate}"></td>
             <td>
-                <a th:href="@{/programmer/update/{id}(id=${bug.id})}" th:if="${bug.status.name().equals('ASSIGNED')}">
+                <a th:href="@{/programmer/mark-as-solved/{id}(id=${bug.id})}">
                     <button type="button" class="btn btn-update">Mark as solved</button>
+                </a>
+                <a th:href="@{/programmer/update/{id}(id=${bug.id})}">
+                    <button type="button" class="btn btn-update">Update</button>
                 </a>
             </td>
 
