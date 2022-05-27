@@ -61,7 +61,4 @@ public class AssignmentService {
         return employeeEntityToDTOConvertor.convert(entity.getEmployee());
     }
 
-    public EmployeeDTO getAssignedProgrammer(Long idBug) {
-        return null;
-    }
 }

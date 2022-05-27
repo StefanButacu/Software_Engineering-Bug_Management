@@ -73,7 +73,6 @@ public class TesterController {
     @PostMapping(path="/update")
     public String updateBug(@ModelAttribute("bug") BugDTO bugDTO, Model model){
         try {
-            bugDTO.setStatus(BugStatus.FOUND);
             bugService.updateBug(bugDTO);
         }catch (ApplicationException ex){
             model.addAttribute("error", ex.getMessage());

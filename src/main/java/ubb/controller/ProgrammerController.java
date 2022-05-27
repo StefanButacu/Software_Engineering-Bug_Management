@@ -13,6 +13,9 @@ import ubb.service.AssignmentService;
 import ubb.service.BugService;
 import ubb.service.EmployeeService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/programmer")
 public class ProgrammerController {
@@ -32,7 +35,11 @@ public class ProgrammerController {
     public String programmerHome(Model model) {
         UserDetails loggedUserDetails = employeeService.getLoggedUserDetails().get();
         EmployeeDTO employeeDTO = employeeService.findEmployeeByUsername(loggedUserDetails.getUsername());
-        model.addAttribute("assignedBugs", assignmentService.getAssignedBugs(employeeDTO.getId()));
+        List<BugDTO> assignedBugs = assignmentService
+                .getAssignedBugs(employeeDTO.getId())
+                .stream().filter(bugDTO -> {return bugDTO.getStatus().equals(BugStatus.ASSIGNED);})
+                .collect(Collectors.toList());
+        model.addAttribute("assignedBugs", assignedBugs);
         return "programmerHome";
     }
 

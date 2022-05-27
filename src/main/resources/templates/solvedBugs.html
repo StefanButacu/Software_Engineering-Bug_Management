@@ -8,19 +8,13 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <meta charset="UTF-8">
-    <title>Tester Home</title>
+    <title>Solved Bugs</title>
     <link rel="stylesheet" th:href="@{/home.css}" />
 
 </head>
 <body>
-<!--<div th:replace="~{fragments/adminNavbar :: adminNavigation}"></div>-->
-<form
-        th:action="@{/logout}" method="post">
-    <input type="submit" class="btn btn-login" value="Logout"/>
-</form>
 <div class="container my-2">
-    <h1>Bug List</h1>
-    <a th:href = "@{/tester/save}" class ="btn btn-add">Add Bug</a>
+    <h1>Solved Bug List</h1>
     <br><br>
     <div style="color:black;" th:if="${error}"  th:text="${error}">Error</div>
 
@@ -32,26 +26,25 @@
             <th>Description</th>
             <th>Status</th>
             <th>Apparition Date</th>
-            <th>Actions</th>
+            <th>Programmer Assigned</th>
+            <th>Action</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="bug: ${bugs}">
-            <td th:text="${bug.id}"/>
-            <td th:text="${bug.title}"/>
+        <tr th:each="assignment: ${assignments}">
+            <td th:text="${assignment.bugDTO.id}"/>
+            <td th:text="${assignment.bugDTO.title}"/>
             <td>
-                <textarea th:rows="15" th:cols="50" th:text="${bug.description}" readonly>
+                <textarea th:rows="15" th:cols="50" th:text="${assignment.bugDTO.description}" readonly>
                 </textarea>
             </td>
-            <td th:text="${bug.status}" />
-            <td th:text="${bug.apparitionDate}"></td>
+            <td th:text="${assignment.bugDTO.status}" />
+            <td th:text="${assignment.bugDTO.apparitionDate}"></td>
+            <td th:text="${assignment.employeeDTO.username}"></td>
             <td>
-                <a th:href="@{/tester/update/{id}(id=${bug.id})}" th:unless="${bug.status.name().equals('APPROVED')}" >
-                    <button type="button" class="btn btn-update">Update</button>
-                </a>
-                <a th:href="@{/tester/delete/{id}(id=${bug.id})}" th:unless="${bug.status.name().equals('APPROVED')}" >
-                    <button type="button" class="btn btn-red" >Delete</button>
+                <a th:href="@{/manager/approve-bug/{id}(id=${assignment.bugDTO.id})}" >
+                    <button type="button" class="btn btn-update">Mark as approved</button>
                 </a>
             </td>
 
@@ -62,3 +55,5 @@
 
 </body>
 </html>
+
+

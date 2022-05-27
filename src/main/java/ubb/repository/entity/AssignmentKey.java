@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Data
 @Embeddable
@@ -26,6 +27,19 @@ public class AssignmentKey implements Serializable {
 
     public Long getIdEmployee() {
         return idEmployee;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AssignmentKey that = (AssignmentKey) o;
+        return Objects.equals(idEmployee, that.idEmployee) && Objects.equals(idBug, that.idBug);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idEmployee, idBug);
     }
 
     public void setIdEmployee(Long idEmployee) {

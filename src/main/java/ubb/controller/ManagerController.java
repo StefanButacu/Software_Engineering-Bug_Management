@@ -37,7 +37,10 @@ public class ManagerController {
     @RequestMapping("/")
     public String managerHome(Model model) {
         model.addAttribute("programmers", employeeService.getAllEmployeeProgrammers());
-        model.addAttribute("bugs", bugService.getAllBugs()); // get all found bugs
+        List<BugDTO> foundBugs = bugService.getAllBugs().stream().filter(bugDTO -> {
+            return bugDTO.getStatus().equals(BugStatus.FOUND);
+        }).collect(Collectors.toList());
+        model.addAttribute("bugs", foundBugs);
         model.addAttribute("assignment", new AssignmentWrapper());
         return "managerHome";
     }
@@ -60,13 +63,20 @@ public class ManagerController {
 
        return "redirect:/manager/";
     }
+
     @GetMapping("/solved-bugs")
     public String getAllSolvedBugs(Model model){
         List<BugDTO> bugDTOS = bugService.getAllBugs().stream().filter(dto ->{
             return dto.getStatus().equals(BugStatus.SOLVED);
         }).collect(Collectors.toList());
-        model.addAttribute("bugs", bugDTOS);
-        return null;
+        List<AssignmentDTO> assignmentDTOS = new ArrayList<>();
+        bugDTOS.forEach(bugDTO -> {
+            EmployeeDTO programmer = assignmentService.getAssignedProgrammerForBug(bugDTO.getId());
+            assignmentDTOS.add(new AssignmentDTO(bugDTO, programmer));
+        });
+
+        model.addAttribute("assignments", assignmentDTOS);
+        return "solvedBugs";
     }
 
     @GetMapping("/approve-bug/{id}")
@@ -75,7 +85,7 @@ public class ManagerController {
         bugDTO.setStatus(BugStatus.APPROVED);
         bugDTO.setApprovalDate(LocalDate.now());
         bugService.updateBug(bugDTO);
-        return null;
+        return "redirect:/manager/history-bugs";
     }
 
     @GetMapping("/history-bugs")
@@ -85,17 +95,11 @@ public class ManagerController {
         }).collect(Collectors.toList());
         List<AssignmentDTO> assignmentDTOS = new ArrayList<>();
         bugDTOS.forEach(bugDTO -> {
-            EmployeeDTO programmer = assignmentService.getAssignedProgrammer(bugDTO.getId());
+            EmployeeDTO programmer = assignmentService.getAssignedProgrammerForBug(bugDTO.getId());
             assignmentDTOS.add(new AssignmentDTO(bugDTO, programmer));
         });
-
         model.addAttribute("assignments", assignmentDTOS);
-        return "bugHistory";
-
+        return "historyBugs";
     }
-
-
-
-
 
 }

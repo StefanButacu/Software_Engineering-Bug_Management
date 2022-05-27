@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ubb.repository.entity.AssignmentEntity;
+import ubb.utils.ApplicationException;
 
 import java.util.List;
 
@@ -41,7 +42,11 @@ public class AssignmentRepository {
     }
 
     public AssignmentEntity findAssignmentByIdBug(Long idBug) {
-        return null;
-        // todo
+        List<AssignmentEntity>  list = getSession().createQuery("SELECT a FROM AssignmentEntity a WHERE a.bug.id = :id").setParameter("id", idBug).getResultList();
+        if( list.size() <= 0)
+            throw new ApplicationException("Invalid query on assignemnts");
+        return list.get(0);
+
+
     }
 }

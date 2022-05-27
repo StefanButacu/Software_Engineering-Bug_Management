@@ -13,8 +13,10 @@
 
 </head>
 <body>
-<!--<div th:replace="~{fragments/adminNavbar :: adminNavigation}"></div>-->
-
+<form
+        th:action="@{/logout}" method="post">
+    <input type="submit" class="btn btn-login" value="Logout"/>
+</form>
 <div class="container my-2">
     <h1>Employee List</h1>
     <a th:href = "@{/admin/save}" class ="btn btn-add">Add Employee</a>

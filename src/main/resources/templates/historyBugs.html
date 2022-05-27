@@ -8,51 +8,43 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <meta charset="UTF-8">
-    <title>Programmer Home</title>
+    <title>History Bugs</title>
     <link rel="stylesheet" th:href="@{/home.css}" />
 
 </head>
 <body>
-<form
-        th:action="@{/logout}" method="post">
-    <input type="submit" class="btn btn-login" value="Logout"/>
-</form>
 <div class="container my-2">
-    <h1>Your asigned Bugs </h1>
+    <h1>Bug History</h1>
     <br><br>
-    <div style="color:black;" th:if="${error}"  th:text="${error}">Error</div>
 
     <table class = "table table-hover table-dark table-border">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Title</th>
             <th>Description</th>
-            <th>Status</th>
             <th>Apparition Date</th>
-            <th>Actions</th>
+            <th>Approval Date</th>
+            <th>Programmer assigned</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="bug: ${assignedBugs}">
-            <td th:text="${bug.id}"/>
-            <td th:text="${bug.title}"/>
+        <tr th:each="assignment: ${assignments}">
+            <td th:text="${assignment.bugDTO.title}"/>
             <td>
-                <textarea th:rows="15" th:cols="50" th:text="${bug.description}" readonly>
+                <textarea th:rows="10" th:cols="35" th:text="${assignment.bugDTO.description}" readonly>
                 </textarea>
             </td>
-            <td th:text="${bug.status}" />
-            <td th:text="${bug.apparitionDate}"></td>
-            <td>
-                <a th:href="@{/programmer/update/{id}(id=${bug.id})}" th:if="${bug.status.name().equals('ASSIGNED')}">
-                    <button type="button" class="btn btn-update">Mark as solved</button>
-                </a>
-            </td>
+            <td th:text="${assignment.bugDTO.apparitionDate}"></td>
+            <td th:text="${assignment.bugDTO.approvalDate}" />
+            <td th:text="${assignment.employeeDTO.username}"/>
 
         </tr>
         </tbody>
     </table>
 </div>
+
 </body>
 </html>
+
+
