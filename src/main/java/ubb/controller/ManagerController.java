@@ -46,14 +46,10 @@ public class ManagerController {
     }
 
     @PostMapping("/save")
-    public String assign(Model model,
-                         @ModelAttribute("assignment") AssignmentWrapper assignment
-                         ){
-        System.out.println(assignment.getIdBug());
-        System.out.println(assignment.getIdProgrammer());
+    public String assign(Model model, @ModelAttribute("assignment") AssignmentWrapper assignment){
        try {
-           BugDTO bugDTO = bugService.findBugById(assignment.getIdBug());
            EmployeeDTO employeeDTO = employeeService.findEmployeeById(assignment.getIdProgrammer());
+           BugDTO bugDTO = bugService.findBugById(assignment.getIdBug());
            AssignmentDTO assignmentDTO = new AssignmentDTO(bugDTO, employeeDTO, LocalDate.now());
            assignmentService.save(assignmentDTO);
        }catch (Exception ex){

@@ -43,7 +43,7 @@ public class ProgrammerController {
     }
 
     @GetMapping("/mark-as-solved/{id}")
-    public String markBugAsResolved(Model model, @PathVariable("id") Long idBug){
+    public String markBugAsSolved(Model model, @PathVariable("id") Long idBug){
         BugDTO dto = bugService.findBugById(idBug);
         dto.setStatus(BugStatus.SOLVED);
         bugService.updateBug(dto);
